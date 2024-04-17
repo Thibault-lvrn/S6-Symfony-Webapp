@@ -19,6 +19,9 @@ class Pdf
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
+    #[ORM\ManyToOne(inversedBy: 'pdfs')]
+    private ?user $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Pdf
     public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getUserId(): ?user
+    {
+        return $this->user;
+    }
+
+    public function setUserId(?user $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
