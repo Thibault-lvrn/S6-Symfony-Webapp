@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SubscriptionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SubscriptionRepository::class)]
@@ -24,6 +26,20 @@ class Subscription
 
     #[ORM\Column]
     private ?int $price = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $media = null;
+
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'subscription_id')]
+    private Collection $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +90,48 @@ class Subscription
     public function setPrice(int $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getMedia(): ?string
+    {
+        return $this->media;
+    }
+
+    public function setMedia(string $media): static
+    {
+        $this->media = $media;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setSubscriptionId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getSubscriptionId() === $this) {
+                $user->setSubscriptionId(null);
+            }
+        }
 
         return $this;
     }
