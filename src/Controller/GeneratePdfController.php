@@ -32,10 +32,6 @@ class GeneratePdfController extends AbstractController
     {
         $user = $this->getUser();
 
-        if (!$this->getUser()) {
-            throw new AccessDeniedException('Vous devez être connecté pour générer un PDF.');
-        }
-
         return $this->render('generate_pdf/form.html.twig', [
             'user' => $user
         ]);
