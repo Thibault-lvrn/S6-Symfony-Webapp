@@ -1,4 +1,5 @@
 <?php
+// src/Entity/User.php
 
 namespace App\Entity;
 
@@ -6,12 +7,14 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -46,20 +49,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $role = null;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $subscriptionEndAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
-    private ?subscription $subscription = null;
+    private ?Subscription $subscription = null;
 
-    /**
-     * @var Collection<int, Pdf>
-     */
-    #[ORM\OneToMany(targetEntity: Pdf::class, mappedBy: 'user_id')]
+    #[ORM\OneToMany(targetEntity: Pdf::class, mappedBy: 'user')]
     private Collection $pdfs;
+
+    #[ORM\Column]
+    private ?int $pdfGenerated = null;
 
     public function __construct()
     {
@@ -189,18 +189,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): static
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
     public function getSubscriptionEndAt(): ?\DateTimeImmutable
     {
         return $this->subscriptionEndAt;
@@ -213,12 +201,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getSubscriptionId(): ?subscription
+    public function getSubscription(): ?Subscription
     {
         return $this->subscription;
     }
 
-    public function setSubscriptionId(?subscription $subscription): static
+    public function setSubscription(?Subscription $subscription): static
     {
         $this->subscription = $subscription;
 
@@ -251,6 +239,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $pdf->setUserId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPdfGenerated(): ?int
+    {
+        return $this->pdfGenerated;
+    }
+
+    public function setPdfGenerated(int $pdfGenerated): static
+    {
+        $this->pdfGenerated = $pdfGenerated;
+
+        return $this;
+    }
+
+    public function incrementPdfGenerated(): self
+    {
+        $this->pdfGenerated++;
 
         return $this;
     }
