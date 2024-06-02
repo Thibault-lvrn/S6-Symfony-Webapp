@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="pdf-history">
+        <h1>historique de {{ user.lastname }} {{ user.firstname }}</h1>
+
+        {% if pagination|length > 0 %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Date</th>
+                        <th>Lien</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pdf in pagination %}
+                        <tr>
+                            <td>{{ pdf.title }}</td>
+                            <td>{{ pdf.createdAt|date('Y-m-d') }}</td>
+                            <td><a class="btn" href="{{ asset('pdf/' ~ pdf.title ~ '.pdf') }}" target="_blank">Voir PDF</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        {% else %}
+            <p>
+                Vous n'avez pas encore généré de PDFs.
+                <a class="btn" href="{{ path('app_generate_pdf') }}">Générez un PDF</a> 
+                ou
+                <a class="btn" href="{{ path('app_register') }}">Choisir un plan</a>
+            </p>
+        {% endif %}
+    </div>
+{% endblock %}
