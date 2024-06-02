@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="exeded-container">
+        <h1>limite de PDFs atteinte</h1>
+        <p>Vous avez atteint la limite de PDFs autorisés pour votre abonnement actuel.</p>
+        <p>Vous pouvez mettre à jour votre abonnement pour augmenter votre limite de PDFs.</p>
+        <a href="{{ path('app_subscription') }}">Choisir un nouveau plan</a>
+        <a href="{{ path('app_account') }}">Retour à la page de compte</a>
+    </div>
+{% endblock %}
