@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Choisissez un abonnement</h1>
+
+    <h2>Abonnement</h2>
+
+    <form id="subscription-form">
+        <div class="content-box">
+            <section class="product-presentation">
+                <section class="push_product_container">
+                    {% for subscription in subscriptions %}
+                        <input type="radio" class="radio_check" id="subscription_{{ subscription.id }}" name="push_radio" value="{{ subscription.id }}" {% if user.subscription and user.subscription.id == subscription.id %}checked{% endif %}>
+                        <label name="{{ subscription.id }}" for="subscription_{{ subscription.id }}" class="push_product push_product--active {% if user.subscription and user.subscription.id == subscription.id %}section-active{% endif %}">
+                            <h2 class="push-product__title">{{ subscription.title }}</h2>
+                            <div class="push-product__box-price">
+                                <span class="push-product__box-price__unity">{{ subscription.price }}</span><span class="push-product__box-price__chiffre price-1 price">€</span></span>
+                                <div>
+                                    <p class="push-product__box-price__condition">EUR / mois</p>
+                                    <p class="push-product__box-price__billed billed-1">Par ans ({{subscription.price * 12}}€)</p>
+                                </div>
+                            </div>
+                            <p class="subscription-description">{{ subscription.description }}</p>
+                            <button class="purchase-button push-product__action" data-plan-id="{{ subscription.id }}">Activez l'abonnement</button>
+                            <ul class="push-product__list">
+                                <li>
+                                    génération par mois : 
+                                    <span class="big-text">
+                                        {% if subscription.pdfLimit == -99 %}
+                                                Illimité
+                                            </span>
+                                        {% else %}
+                                            {{ subscription.pdfLimit }}
+                                            </span> PDF
+                                        {% endif %}
+                                </li>
+                            </ul>
+                        </label>
+                    {% endfor %}
+                </section>
+            </section>
+        </div>
+    </form>
+
+    <script>
+        document.querySelectorAll('.purchase-button').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                let planId = this.dataset.planId;
+                window.location.href = "{{ path('subscription_change', {'id': 'PLAN_ID'}) }}".replace('PLAN_ID', planId);
+            });
+        });
+    </script>
+{% endblock %}
