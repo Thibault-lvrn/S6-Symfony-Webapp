@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     gotenberg_url: '%env(GOTENBERG_URL)%'
+    base_url: '%env(BASE_URL)%'
 
 services:
     # default configuration for services in *this* file
@@ -23,5 +24,13 @@ services:
     App\Service\GotenbergClient:
         arguments:
             $gotenbergUrl: '%env(GOTENBERG_URL)%'
+
+    App\Controller\GeneratePdfController:
+        arguments:
+            $baseUrl: '%env(BASE_URL)%'
+            $microservice_url: '%env(MICROSERVICE_URL)%'
+
+
+    Doctrine\Persistence\ObjectManager: '@doctrine.orm.default_entity_manager'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
