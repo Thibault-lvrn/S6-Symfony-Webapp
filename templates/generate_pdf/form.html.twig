@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Generate Pdf{% endblock %}
+
+{% block body %}
+    <div class="convertisseur">
+         <p>Nombre de fichiers PDF générés: {{ user.pdfGenerated }}/ 
+            {% if user.subscription and user.subscription.pdfLimit != -99 %}
+                {{ user.subscription.pdfLimit }}
+            {% else %}
+                Illimité
+            {% endif %}
+        </p>
+        <h1 class="convertisseur__title">Convertir une URL en PDF</h1>
+        <p>Entrez l'URL de la page que vous souhaitez convertir en PDF</p>
+        <p>Entrez le nom du fichier PDF que vous souhaitez générer</p>
+        <br>
+        <form action="{{ path('app_submit_pdf') }}" method="post" class="convertisseur__form">
+            <div class="convertisseur__name__container">
+                <label for="fileName">Nom du fichier :</label>
+                <input type="text" id="fileName" name="fileName" class="convertisseur__form__input convertisseur__form__name" required>
+            </div>
+            <div class="convertisseur__form__container">
+                <div class="convertisseur__form__input__container">
+                    <label for="url">URL:</label>
+                    <input type="text" id="url" name="url" class="convertisseur__form__input convertisseur__form__url" required>
+                </div>
+                <button type="submit" class="convertisseur__form__action btn">Convertir en PDF</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

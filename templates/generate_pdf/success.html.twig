@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="success">
+        <p>Nombre de fichiers PDF générés: {{ user.pdfGenerated }}/ {{ user.subscription ? user.subscription.pdfLimit : 'No limit' }}</p>
+        <h1>Le pdf a été généré avec succès</h1>
+        {% set current_path = app.request.get('_route') %}
+        <embed src="{{ pdfPath }}" width="800" height="500" type="application/pdf"/>
+    </div>
+{% endblock %}
