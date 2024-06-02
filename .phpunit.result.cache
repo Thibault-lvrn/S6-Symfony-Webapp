@@ -1,0 +1,1 @@
+{"version":1,"defects":{"App\\Tests\\Entity\\PdfTest::testGetterAndSetter":4,"App\\Tests\\Entity\\SubcriptionTest::testGetterAndSetter":5},"times":{"App\\Tests\\Entity\\PdfTest::testGetterAndSetter":0.011,"App\\Tests\\Entity\\SubcriptionTest::testGetterAndSetter":0.001,"SubscriptionTest::testGetterAndSetter":0.001,"UserTest::testGetterAndSetter":0}}

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="account-information">
+        <div class="account-text">
+            <h1>{{ user.firstname }} {{ user.lastname }} Information</h1>
+
+            <p>Email : {{ user.email }}</p>
+            <p>Nom : {{ user.firstname }}</p>
+            <p>Prénom : {{ user.lastname }}</p>
+            <p>Abonnement : {{ user.subscription ? user.subscription.title : 'No subscription' }}</p>
+            <p>Limite de PDF : {{ user.subscription ? user.subscription.pdfLimit : 'No limit' }}</p>
+        </div>
+        <div class="plan-card">
+            <div class="product_card_container">
+                <label name="{{ user.subscription.id }}" for="subscription_{{ user.subscription.id }}" class="product_card product_card--active {% if user.subscription and user.subscription.id == user.subscription.id %}section-active{% endif %}">
+                    <h2 class="product_card__title">{{ user.subscription.title }}</h2>
+                    <p class="subscription-description">{{ user.subscription.description }}</p>
+                    <ul class="product_card__list">
+                        <li>
+                            génération par mois : 
+                            <span class="big-text">
+                                {% if user.subscription.pdfLimit == -99 %}
+                                        Illimité
+                                    </span>
+                                {% else %}
+                                    {{ user.subscription.pdfLimit }}
+                                    </span> PDF
+                                {% endif %}
+                        </li>
+                    </ul>
+                    <a class="btn purchase-button product_card__action" href="{{ path('app_subscription') }}">Changer d'abonnement</a>
+                </label>
+            </div>
+        </div>
+{% endblock %}
