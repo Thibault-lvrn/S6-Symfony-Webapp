@@ -285,6 +285,13 @@ header {
     margin-bottom: 20px;
 }
 
+.error-login {
+    color: red;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
 .form_row div {
     display: flex;
     flex-direction: column;
