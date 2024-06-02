@@ -1,0 +1,56 @@
+<header>
+    <div>
+        <a href="{{ path('home') }}" class="logo">
+            <h1>Convertisseur PDF en ligne</h1>
+        </a>
+    </div>
+    <input id="navigation_mobile" type="checkbox" class="mobile_navigation__checkbox">
+    <navigation class="navigation">
+        <div class="mobile-content">
+            <ul>
+                {% if app.user is null %}
+                    <a href="{{ path('app_register') }}">Inscription</a>
+                    <a href="{{ path('app_login') }}">Connexion</a>
+                {% endif %}
+                {% if app.user %}
+                    <a href="{{ path('app_generate_pdf') }}">Générez votre pdf</a>
+                    <a href="{{ path('app_history') }}">Historique</a>
+                    <a href="{{ path('app_subscription') }}">Abonnement</a>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="desktop-content">
+            {% if app.user %}
+                <a href="{{ path('app_generate_pdf') }}">Générez votre pdf</a>
+                <a href="{{ path('app_history') }}">Historique</a>
+                <a href="{{ path('app_subscription') }}">Abonnement</a>
+            {% endif %}
+        </div>
+        <div>
+            {% if app.user is null %}
+            <div class="desktop-content">
+                <a href="{{ path('app_register') }}">Inscription</a>
+                <a href="{{ path('app_login') }}">Connexion</a>
+            </div>
+            {% endif %}
+            {% if app.user %}
+                
+                <div class="account-container">
+                    <label for="account-check" class="profile_picture">
+                        <p>{{ app.user.lastname|slice(0, 1) }}{{ app.user.firstname|slice(0, 1) }}</p>
+                    </label>
+                    <input type="checkbox" id="account-check" class="account-check">
+                    <div class="account-dropdown">
+                        <a href="{{ path('app_account') }}">Mon compte</a>
+                        <a href="{{ path('app_logout') }}">Déconnexion</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <label for="navigation_mobile" class="mobile_navigation__button" aria-label="menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+    </navigatin>
+</header>
