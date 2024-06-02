@@ -71,15 +71,22 @@ body {
     }
 }
 
+
 /* header */
 header {
     width: 100%;
-    padding: 0 20px;
+    padding: 0 48px;
     height: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f8f8f8;
+    background-color: white;
+}
+
+@media screen and (max-width: 768px) {
+    header {
+        padding: 0 20px;
+    }
 }
 
 .logo h1 {
@@ -460,8 +467,12 @@ header {
 }
 
 @media screen and (max-width: 768px) {
+    .convertisseur__name__container {
+        max-width: 100% !important;
+    }
+
     .convertisseur__form__name {
-        width: 100%;
+        width: 100% !important;
     }
 
     .container .convertisseur__form__container {
@@ -480,13 +491,23 @@ header {
     }
 }
 
+media screen and (min-width: 768px) and (max-width: 1000px) {
+    .container .convertisseur__form__input__container {
+        width: 70%;
+    }
+
+    .container .convertisseur__form__action {
+        width: 30%;
+    }
+}
+
 .convertisseur__form__container {
     border: none;
     border-radius: 5px;
     width: 100%;
     display: flex;
     align-items: end;
-    gap: 3  0px;
+    gap: 30px;
 }
 
 .convertisseur__name__container {
