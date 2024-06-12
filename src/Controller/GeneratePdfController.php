@@ -48,7 +48,7 @@ class GeneratePdfController extends AbstractController
         $user = $this->getUser();
         $pdfLimit = $user->getSubscription()->getPdfLimit();
 
-        if ($user->getPdfGenerated() >= $pdfLimit) {
+        if ($user->getPdfGenerated() >= $pdfLimit && $pdfLimit !== -99) {
             return $this->render('error/exeded.html.twig');
         }
 
