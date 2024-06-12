@@ -447,9 +447,10 @@ header {
 
 .convertisseur__form {
     display: flex;
-    gap: 20px;
+    gap: 2rem;
     width: 100%;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .convertisseur__form__name {
@@ -459,14 +460,23 @@ header {
     width: 10%;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 930px) {
+    .convertisseur__form {
+        flex-direction: column;
+    }
+
     .convertisseur__form__name {
         width: 100%;
+    }
+
+    .container .convertisseur__name__container {
+        max-width: 100%;
     }
 
     .container .convertisseur__form__container {
         flex-direction: column;
         align-items: flex-start;
+        width: 100%;
     }
 
     .container .convertisseur__form__input__container {
@@ -476,17 +486,17 @@ header {
 
     .container .convertisseur__form__action {
         width: 100%;
-        margin-top: 30px;
+        margin-top: 18px;
     }
 }
 
 .convertisseur__form__container {
     border: none;
     border-radius: 5px;
-    width: 100%;
+    width: 90%;
     display: flex;
     align-items: end;
-    gap: 3  0px;
+    gap: 2rem;
 }
 
 .convertisseur__name__container {
